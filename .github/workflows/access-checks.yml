@@ -1,0 +1,35 @@
+name: Access checks
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  access-checks:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+
+    steps:
+      - name: Download AccessCheck
+        uses: actions/checkout@v6
+        with:
+          path: accesscheck
+          persist-credentials: false
+
+      - name: Download Flask notes lab
+        uses: actions/checkout@v6
+        with:
+          repository: netphantomm/appsec-notes-lab
+          ref: main
+          path: appsec-notes-lab
+          persist-credentials: false
+
+      - name: Run access checks
+        working-directory: accesscheck
+        run: docker compose up --build --exit-code-from accesscheck
