@@ -68,3 +68,16 @@ After restoring the ownership check, all 10 checks passed.
 - Checks HTTP status codes, not response contents.
 - Stops at the first failure.
 - Passing these checks does not prove the application is fully secure.
+
+## Run with Docker Compose
+
+Keep `accesscheck` and `appsec-notes-lab` in sibling directories.
+From the `accesscheck` directory, run:
+
+```bash
+docker compose up --build --exit-code-from accesscheck
+```
+
+Compose waits for Flask to respond, runs the 10 access checks,
+then stops Flask. Exit code `0` means all checks passed.
+Flask is reached over the Compose network without publishing a host port.

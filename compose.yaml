@@ -1,0 +1,16 @@
+services:
+  notes:
+    build: ../appsec-notes-lab
+    healthcheck:
+      test: ["CMD", "python", "-c", "from urllib.request import urlopen; urlopen('http://127.0.0.1:5000/', timeout=2).close()"]
+      interval: 2s
+      timeout: 3s
+      retries: 15
+
+  accesscheck:
+    build: .
+    environment:
+      BASE_URL: http://notes:5000
+    depends_on:
+      notes:
+        condition: service_healthy
