@@ -1,3 +1,5 @@
+[Case study: Reading another user's note](CASE.md)
+
 # AccessCheck
 
 A Python CLI tool that runs 10 authentication and access-control
